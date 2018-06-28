@@ -30,8 +30,10 @@ public class TheMovieDbController {
     private final String API_BASE_URL = "https://api.themoviedb.org/3";
     private final String API_KEY_PARAM = "api_key";
     private final String TAG  = "TheMovieDbController";
+    // url for loading the images
     private String imageBaseUrl;
     private String posterSize;
+    private String backdropSize;
     private ArrayList<Movie> movies;
     private MovieAdapter adapter;
 
@@ -47,6 +49,10 @@ public class TheMovieDbController {
         return posterSize;
     }
 
+    public String getBackdropSize() {
+        return backdropSize;
+    }
+
     public TheMovieDbController(Context context) throws IllegalArgumentException{
         if(context == null)
             throw new IllegalArgumentException("Context must be not null");
@@ -58,7 +64,6 @@ public class TheMovieDbController {
     public void setAdapter(MovieAdapter adapter){
         this.adapter = adapter;
     }
-
 
     public void getConfiguration(){
         // Url
@@ -75,6 +80,7 @@ public class TheMovieDbController {
                     imageBaseUrl = images.getString("secure_base_url");
                     //obtain posterSize
                     posterSize = images.getJSONArray("poster_sizes").optString(3, "w342");
+                    backdropSize = images.getJSONArray("backdrop_sizes").optString(1, "w780");
                     Log.i(TAG, String.format("Loaded configuration with image url: %s and poster size of: %s", imageBaseUrl, posterSize));
                     getNowPlaying();
 
@@ -126,4 +132,9 @@ public class TheMovieDbController {
             Toast.makeText(context, message, Toast.LENGTH_LONG);
         }
     }
+
+    public String getImageURL(String size, String path){
+        return String.format("%s%s%s", imageBaseUrl, size, path);
+    }
+
 }

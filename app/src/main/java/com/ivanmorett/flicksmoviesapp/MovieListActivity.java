@@ -32,6 +32,7 @@ public class MovieListActivity extends AppCompatActivity {
 
 
         initializeController();
+        adapter.setController(dbController);
 
     }
 
