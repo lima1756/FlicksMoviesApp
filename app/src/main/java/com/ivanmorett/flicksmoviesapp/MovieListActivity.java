@@ -18,11 +18,13 @@ public class MovieListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //setTheme(R.style.AppTheme);
+        dbController = new TheMovieDbController(getBaseContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
 
 
-        dbController = new TheMovieDbController(getBaseContext());
+
 
         adapter = new MovieAdapter(dbController.getMovies());
         rvMovies = findViewById(R.id.rvMovies);
