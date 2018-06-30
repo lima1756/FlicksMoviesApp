@@ -37,7 +37,7 @@ Here's a walkthrough of implemented user stories:
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+The splash screen was a hell, cause it didn't accept xml file it needed a png an I didn't knew that until I try it
 
 ## Open-source libraries used
 
