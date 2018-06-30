@@ -27,29 +27,35 @@ public class TheMovieDbController {
 
     private Context context;
     private AsyncHttpClient client;
-    private final String API_BASE_URL = "https://api.themoviedb.org/3";
+    private static final String API_BASE_URL = "https://api.themoviedb.org/3";
     private final String API_KEY_PARAM = "api_key";
     private final String TAG  = "TheMovieDbController";
     // url for loading the images
-    private String imageBaseUrl;
-    private String posterSize;
-    private String backdropSize;
+    private static String imageBaseUrl;
+
+    // Sizes retrieved from de db
+    private static String posterSize;
+    private static String backdropSize;
+
+    //Movie list
     private ArrayList<Movie> movies;
+
+    //Adapter
     private MovieAdapter adapter;
 
     public ArrayList<Movie> getMovies() {
         return movies;
     }
 
-    public String getImageBaseUrl() {
+    public static String getImageBaseUrl() {
         return imageBaseUrl;
     }
 
-    public String getPosterSize() {
+    public static String getPosterSize() {
         return posterSize;
     }
 
-    public String getBackdropSize() {
+    public static String getBackdropSize() {
         return backdropSize;
     }
 
@@ -72,6 +78,7 @@ public class TheMovieDbController {
         RequestParams params = new RequestParams();
         params.put(API_KEY_PARAM, context.getString(R.string.api_key));
         client.get(url, params, new JsonHttpResponseHandler(){
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try{
@@ -126,14 +133,18 @@ public class TheMovieDbController {
         });
     }
 
+    public static String getYoutubeLink(String id){
+        return API_BASE_URL + "/movie/"+id+"/videos";
+    }
+
     private void logError(String message,  Throwable error, boolean alertUser){
         Log.e(TAG, message);
         if(alertUser){
-            Toast.makeText(context, message, Toast.LENGTH_LONG);
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
         }
     }
 
-    public String getImageURL(String size, String path){
+    public static String getImageURL(String size, String path){
         return String.format("%s%s%s", imageBaseUrl, size, path);
     }
 
